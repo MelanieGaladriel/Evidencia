@@ -1,0 +1,272 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package evidencicj;
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Scanner;
+
+/**
+ *
+ * @author work pc
+ */
+public class Administración {
+
+    /**
+     * @param args the command line arguments
+     */
+   public static Scanner leer = new Scanner(System.in);
+    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Doctores.csv";
+    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Pacientes.csv";
+    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Citas.csv";
+
+    
+    public static ArrayList <Doctor> Doc = new ArrayList<Doctor>();
+    public static ArrayList <Paciente> Paci = new ArrayList<Paciente>(); 
+    
+
+    public static void main(String[] args) throws IOException, ParseException{
+        
+
+
+            BufferedWriter bwDoctores = new BufferedWriter(new FileWriter(DoctoresC, true));
+            BufferedWriter bwPacientes = new BufferedWriter(new FileWriter(PacientesC, true));
+            BufferedWriter bwCitas = new BufferedWriter(new FileWriter(CitasC, true));
+
+            String line;
+
+            leer.useDelimiter("\n");
+            int opc, ban = 0, ban1 = 0;
+            boolean acceso = false;
+            
+            HashMap<String, String> mapa = new HashMap<String, String>();
+      Scanner scanner = new Scanner(System.in);
+            System.out.println("** Bienvenido al Sistema de la Clinica**\n");
+            System.out.println("INGRECE SUS DATOS PARA ENTRAR\n");
+      String username = "Clinica";
+        String password = "1020";
+ 
+        System.out.print("Ingresa el usuario: ");
+        String inputUsername = scanner.nextLine();
+ 
+        System.out.print("Ingresa la contraseña: ");
+        String inputPassword = scanner.nextLine();
+ 
+        if (username.equals(inputUsername) && password.equals(inputPassword)) {
+            
+        } else {
+            System.out.println("Contraseña incorrecta, intente nuevamente, por favor");                        
+        }  
+          
+      
+         do          // ciclo do while para control del menu, es controlado con la variable ban
+                {
+                    try{                                                                    //Try para iniciar excepcion de errores
+
+                    System.out.println("\nSeleccione la opción deseada:\n");                // menu de sisttema                     
+                        System.out.println("ALTA PACIENTE ------------  [1]");
+                        System.out.println("ALTA DOCTOR --------------  [2]");
+                        System.out.println("AGENDAR CITA  ------------  [3]");
+                        System.out.println("SALIR  -------------------  [4]");
+                      
+                        opc = leer.nextInt();
+
+                        /// Menu de opciones
+                        switch(opc)
+                        {
+                            case 1:
+
+                               creaPaciente(bwPacientes);
+                                break;
+
+                            case 2:
+
+
+                                creaDoctor(bwDoctores);
+                                break;
+
+                            case 3:
+
+                                 creaCita(bwCitas);
+                            break;
+                                                        
+                            case 4:
+
+                                System.out.println("Saliendo");     // opcion de salida del programa
+                                ban = 1;                            // se cambia el valor de la bandera que controla el ciclo do-while del menu
+                                break;
+                            default:
+                                System.out.println("Opción incorrecta\n");  //default que muestra un mensaje de error al introducir una opcion incorrecta
+                                break;
+                        }
+                    }
+                    catch (Exception e)             // catch que obtiene el error y nos muestra un mensaje de error en caso de que se presente uno
+                    {
+                        System.out.println("ERROR !!\n");
+                        break;
+
+                    }
+                }while(ban == 0);
+        
+    }
+    
+////
+/// Metodo para crear un doctor y guardarlo en el archivo Doctores
+////    
+        public static void creaDoctor(BufferedWriter bw) throws IOException {
+            
+            
+        System.out.print("Ingresa el nombre del doctor\n");         /// Se piden los datos del objeto
+        String nombreDoctor = leer.next();
+        System.out.print("Ingresa la especialidad del doctor\n");
+        String esp = leer.next();
+        System.out.print("Ingresa el Id del doctor\n");
+        System.out.print("**El Id del doctor debe iniciar con 101**");
+        String idDoctor = leer.next();
+        Doctor doctorInfo = new Doctor(idDoctor, nombreDoctor, esp); // se crea el objeto doctor con los datos ingresados por usuario
+
+        
+        try(FileWriter fw = new FileWriter(DoctoresC, true);  // se crean variables auxiliares 
+        BufferedWriter bww = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bww)){
+
+
+                    out.print(doctorInfo.idDoctor);           // se escriben los datos en el archivo
+                    out.print(",");
+                    out.print(doctorInfo.nombreDoctor);
+                    out.print(",");
+                    out.println(doctorInfo.esp);
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (bw != null) {
+                                bw.close();
+                                System.out.println("\nCambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    public static void creaPaciente(BufferedWriter bw) throws IOException {
+
+        
+        System.out.print("Ingresa el nombre del Paciente");         /// Se piden los datos del objeto
+        String nombrePaciente = leer.next();
+        System.out.print("Ingresa el Id del paciente  **El Id del paciente debe iniciar con 102**");
+        System.out.print("**El Id del paciente debe iniciar con 102**");
+        String idPaciente = leer.next();
+        Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); // se crea el objeto doctor con los datos ingresados por usuario
+
+        
+        try(FileWriter fw = new FileWriter(PacientesC, true);  // se crean variables auxiliares 
+        BufferedWriter bww = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bww)){
+
+
+                    out.print(PacienteInfo.idPaciente);           // se escriben los datos en el archivo
+                    out.print(",");
+                    out.println(PacienteInfo.nombrePaciente);
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (bw != null) {
+                                bw.close();
+                                System.out.println("\nCambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    public static void creaCita(BufferedWriter bw) throws IOException {
+        
+            try{
+                System.out.println("Ingrese el id de la cita:");
+                System.out.print("**El Id de la Cita debe iniciar con 103**");
+                int idC = leer.nextInt();
+                System.out.print("Ingresa la fecha de tu cita\n");                
+                String fechaCitaString = leer.next();
+                Date fechaCita = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCitaString);
+                String motivoCita = leer.nextLine();
+                System.out.print("Ingresa el id del doctor\n");
+                String idDoctor = leer.next();
+                System.out.print("Ingresa el id del paciente\n");
+                String idPaciente = leer.next();
+                System.out.print("Ingresa el motivo de tu cita\n");
+                leer.nextLine();                
+                Cita citaInfo = new Cita(idC, fechaCita, Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
+
+        
+        try(FileWriter fw = new FileWriter(CitasC, true);  // se crean variables auxiliares 
+        BufferedWriter bww = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bww)){
+
+
+                    out.print(citaInfo.id);           // se escriben los datos en el archivo
+                    out.print(",");
+                    out.println(citaInfo.fechaCita);
+                    out.print(",");
+                    out.print(citaInfo.idDoctor);
+                    out.print(",");
+                    out.print(citaInfo.idPaciente);
+                    out.print(",");
+                    out.println(citaInfo.motivoCita);
+
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (bw != null) {
+                                bw.close();
+                                System.out.println("\nCambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+                
+                
+            }
+                catch(ParseException e) {
+                    System.out.println("ParseException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (bw != null) {
+                                bw.close();
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                            }
+    
+                                                                       
+    }      
+ }
+    
+
