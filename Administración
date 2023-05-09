@@ -1,10 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+
+package jcevidencia;
+
+/**
+ *
+ * @author work pc
  */
-package evidencicj;
-
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -23,15 +23,15 @@ import java.util.Scanner;
  *
  * @author work pc
  */
-public class Administración {
+public class Administracion {
 
     /**
      * @param args the command line arguments
      */
    public static Scanner leer = new Scanner(System.in);
-    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Doctores.csv";
-    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Pacientes.csv";
-    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\EvidenciCJ\\src\\evidencicj\\Citas.csv";
+    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Doctores.csv";
+    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Pacientes.csv";
+    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Citas.csv";
 
     
     public static ArrayList <Doctor> Doc = new ArrayList<Doctor>();
@@ -42,13 +42,13 @@ public class Administración {
         
 
 
-            BufferedWriter bwDoctores = new BufferedWriter(new FileWriter(DoctoresC, true));
-            BufferedWriter bwPacientes = new BufferedWriter(new FileWriter(PacientesC, true));
-            BufferedWriter bwCitas = new BufferedWriter(new FileWriter(CitasC, true));
+            BufferedWriter clDoctores = new BufferedWriter(new FileWriter(DoctoresC, true));
+            BufferedWriter clPacientes = new BufferedWriter(new FileWriter(PacientesC, true));
+            BufferedWriter clCitas = new BufferedWriter(new FileWriter(CitasC, true));
 
             String line;
 
-            leer.useDelimiter("\n");
+           
             int opc, ban = 0, ban1 = 0;
             boolean acceso = false;
             
@@ -75,8 +75,8 @@ public class Administración {
          do          // ciclo do while para control del menu, es controlado con la variable ban
                 {
                     try{                                                                    //Try para iniciar excepcion de errores
-
-                    System.out.println("\nSeleccione la opción deseada:\n");                // menu de sisttema                     
+                   System.out.println(""); 
+                    System.out.println("Seleccione la opción deseada:");                // menu de sisttema                     
                         System.out.println("ALTA PACIENTE ------------  [1]");
                         System.out.println("ALTA DOCTOR --------------  [2]");
                         System.out.println("AGENDAR CITA  ------------  [3]");
@@ -89,18 +89,18 @@ public class Administración {
                         {
                             case 1:
 
-                               creaPaciente(bwPacientes);
+                               Paciente(clPacientes);
                                 break;
 
                             case 2:
 
 
-                                creaDoctor(bwDoctores);
+                                Doctor(clDoctores);
                                 break;
 
                             case 3:
 
-                                 creaCita(bwCitas);
+                                 Cita(clCitas);
                             break;
                                                         
                             case 4:
@@ -109,13 +109,13 @@ public class Administración {
                                 ban = 1;                            // se cambia el valor de la bandera que controla el ciclo do-while del menu
                                 break;
                             default:
-                                System.out.println("Opción incorrecta\n");  //default que muestra un mensaje de error al introducir una opcion incorrecta
+                                System.out.println("Opción incorrecta");  //default que muestra un mensaje de error al introducir una opcion incorrecta
                                 break;
                         }
                     }
                     catch (Exception e)             // catch que obtiene el error y nos muestra un mensaje de error en caso de que se presente uno
                     {
-                        System.out.println("ERROR !!\n");
+                        System.out.println("ERROR !!");
                         break;
 
                     }
@@ -126,22 +126,22 @@ public class Administración {
 ////
 /// Metodo para crear un doctor y guardarlo en el archivo Doctores
 ////    
-        public static void creaDoctor(BufferedWriter bw) throws IOException {
+        public static void Doctor(BufferedWriter cl) throws IOException {
             
             
-        System.out.print("Ingresa el nombre del doctor\n");         /// Se piden los datos del objeto
+        System.out.print("Ingresa el nombre del doctor: ");         /// Se piden los datos del objeto
         String nombreDoctor = leer.next();
-        System.out.print("Ingresa la especialidad del doctor\n");
+        System.out.print("Ingresa la especialidad del : ");
         String esp = leer.next();
-        System.out.print("Ingresa el Id del doctor\n");
-        System.out.print("**El Id del doctor debe iniciar con 101**");
+        System.out.print("**El Id del doctor debe iniciar con 101** ");
+        System.out.print("Ingresa el Id del doctor: ");
         String idDoctor = leer.next();
         Doctor doctorInfo = new Doctor(idDoctor, nombreDoctor, esp); // se crea el objeto doctor con los datos ingresados por usuario
 
         
-        try(FileWriter fw = new FileWriter(DoctoresC, true);  // se crean variables auxiliares 
-        BufferedWriter bww = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bww)){
+        try(FileWriter file = new FileWriter(DoctoresC, true);  // se crean variables auxiliares 
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
 
 
                     out.print(doctorInfo.idDoctor);           // se escriben los datos en el archivo
@@ -155,9 +155,9 @@ public class Administración {
                     System.out.println("IOException catched while writing: " + e.getMessage());
                     } finally {
                         try {
-                            if (bw != null) {
-                                bw.close();
-                                System.out.println("\nCambios guardados");
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
                             }
                         } catch (IOException e) {
                             System.out.println("IOException catched while closing: " + e.getMessage());
@@ -165,20 +165,20 @@ public class Administración {
                     }
 
     }
-    public static void creaPaciente(BufferedWriter bw) throws IOException {
+    public static void Paciente(BufferedWriter cl) throws IOException {
 
         
-        System.out.print("Ingresa el nombre del Paciente");         /// Se piden los datos del objeto
+        System.out.print("Ingresa el nombre del Paciente: ");         /// Se piden los datos del objeto
         String nombrePaciente = leer.next();
-        System.out.print("Ingresa el Id del paciente  **El Id del paciente debe iniciar con 102**");
-        System.out.print("**El Id del paciente debe iniciar con 102**");
+        System.out.print("**El Id del paciente debe iniciar con 102** ");
+        System.out.print("Ingresa el Id del paciente: ");       
         String idPaciente = leer.next();
         Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); // se crea el objeto doctor con los datos ingresados por usuario
 
         
-        try(FileWriter fw = new FileWriter(PacientesC, true);  // se crean variables auxiliares 
-        BufferedWriter bww = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bww)){
+        try(FileWriter file = new FileWriter(PacientesC, true);  // se crean variables auxiliares 
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
 
 
                     out.print(PacienteInfo.idPaciente);           // se escriben los datos en el archivo
@@ -191,9 +191,9 @@ public class Administración {
                     System.out.println("IOException catched while writing: " + e.getMessage());
                     } finally {
                         try {
-                            if (bw != null) {
-                                bw.close();
-                                System.out.println("\nCambios guardados");
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
                             }
                         } catch (IOException e) {
                             System.out.println("IOException catched while closing: " + e.getMessage());
@@ -201,28 +201,28 @@ public class Administración {
                     }
 
     }
-    public static void creaCita(BufferedWriter bw) throws IOException {
+    public static void Cita(BufferedWriter cl) throws IOException {
         
             try{
-                System.out.println("Ingrese el id de la cita:");
-                System.out.print("**El Id de la Cita debe iniciar con 103**");
+                System.out.println("Ingrese el id de la cita: ");
+                System.out.print("**El Id de la Cita debe iniciar con 103** ");
                 int idC = leer.nextInt();
-                System.out.print("Ingresa la fecha de tu cita\n");                
+                System.out.print("Ingresa la fecha de tu cita: ");                
                 String fechaCitaString = leer.next();
                 Date fechaCita = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCitaString);
                 String motivoCita = leer.nextLine();
-                System.out.print("Ingresa el id del doctor\n");
+                System.out.print("Ingresa el id del doctor (101): ");
                 String idDoctor = leer.next();
-                System.out.print("Ingresa el id del paciente\n");
+                System.out.print("Ingresa el id del paciente (102): ");
                 String idPaciente = leer.next();
-                System.out.print("Ingresa el motivo de tu cita\n");
+                System.out.print("Ingresa el motivo de tu cita: ");
                 leer.nextLine();                
                 Cita citaInfo = new Cita(idC, fechaCita, Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
 
         
-        try(FileWriter fw = new FileWriter(CitasC, true);  // se crean variables auxiliares 
-        BufferedWriter bww = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bww)){
+        try(FileWriter file = new FileWriter(CitasC, true);  // se crean variables auxiliares 
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
 
 
                     out.print(citaInfo.id);           // se escriben los datos en el archivo
@@ -242,9 +242,9 @@ public class Administración {
                     System.out.println("IOException catched while writing: " + e.getMessage());
                     } finally {
                         try {
-                            if (bw != null) {
-                                bw.close();
-                                System.out.println("\nCambios guardados");
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
                             }
                         } catch (IOException e) {
                             System.out.println("IOException catched while closing: " + e.getMessage());
@@ -257,8 +257,8 @@ public class Administración {
                     System.out.println("ParseException catched while writing: " + e.getMessage());
                     } finally {
                         try {
-                            if (bw != null) {
-                                bw.close();
+                            if (cl != null) {
+                                cl.close();
                             }
                         } catch (IOException e) {
                             System.out.println("IOException catched while closing: " + e.getMessage());
@@ -268,5 +268,5 @@ public class Administración {
                                                                        
     }      
  }
-    
+   
 
