@@ -1,9 +1,3 @@
-package ecj;
-
-/**
- *
- * @author work pc
- */
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -47,7 +41,7 @@ public class ECJ {
             int opc, ban = 0, ban1 = 0;
             boolean acceso = false;
             
-            HashMap<String, String> mapa = new HashMap<String, String>();
+            
       Scanner scanner = new Scanner(System.in);
             System.out.println("** Bienvenido al Sistema de la Clinica**\n");
             System.out.println("INGRECE SUS DATOS PARA ENTRAR\n");
@@ -202,6 +196,8 @@ public class ECJ {
                 System.out.print("Ingresa la fecha de tu cita: ");                
                 String fechaCitaString = leer.next();
                 Date fechaCita = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCitaString);
+                String hora = leer.nextLine();
+                System.out.print("Ingresa Hora dla cita: ");
                 String motivoCita = leer.nextLine();
                 System.out.print("Ingresa el id del doctor (101): ");
                 String idDoctor = leer.next();
@@ -209,7 +205,7 @@ public class ECJ {
                 String idPaciente = leer.next();
                 System.out.print("Ingresa el motivo de tu cita: ");
                 leer.nextLine();                
-                Cita citaInfo = new Cita(idC, fechaCita, Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
+                Cita citaInfo = new Cita(idC, fechaCita, hora,Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
 
         
         try(FileWriter file = new FileWriter(CitasC, true);  
@@ -220,6 +216,8 @@ public class ECJ {
                     out.print(citaInfo.id);          
                     out.print(",");
                     out.println(citaInfo.fechaCita);
+                    out.print(",");
+                    out.println(citaInfo.hora);
                     out.print(",");
                     out.print(citaInfo.idDoctor);
                     out.print(",");
