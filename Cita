@@ -1,9 +1,3 @@
-package ecj;
-
-/**
- *
- * @author work pc
- */
 import java.util.Date;
 import java.time.LocalDateTime;
 
@@ -12,13 +6,15 @@ import java.time.LocalDateTime;
 public class Cita {
     int id;
     Date fechaCita;
+    String hora;
     int idDoctor;
     int idPaciente;
     String motivoCita;
 
-    public Cita (int idC, Date fecha, int doctorId, int pacienteId, String motivo){
+    public Cita (int idC, Date fecha, String horacita, int doctorId, int pacienteId, String motivo){
       id = idC;
       fechaCita = fecha;
+      hora = horacita;
       idDoctor = doctorId;
       idPaciente = pacienteId;
       motivoCita = motivo;
