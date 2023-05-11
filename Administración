@@ -1,5 +1,5 @@
 
-package jcevidencia;
+package ecj;
 
 /**
  *
@@ -19,23 +19,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
-/**
- *
- * @author work pc
- */
-public class Administracion {
+
+public class ECJ {
 
     /**
      * @param args the command line arguments
      */
-   public static Scanner leer = new Scanner(System.in);
-    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Doctores.csv";
-    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Pacientes.csv";
-    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\JCEvidencia\\src\\jcevidencia\\Citas.csv";
+    
+     public static Scanner leer = new Scanner(System.in);
+    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Doctores.csv";
+    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Pacientes.csv";
+    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Citas.csv";
 
     
-    public static ArrayList <Doctor> Doc = new ArrayList<Doctor>();
-    public static ArrayList <Paciente> Paci = new ArrayList<Paciente>(); 
     
 
     public static void main(String[] args) throws IOException, ParseException{
@@ -72,11 +68,11 @@ public class Administracion {
         }  
           
       
-         do          // ciclo do while para control del menu, es controlado con la variable ban
+         do          
                 {
-                    try{                                                                    //Try para iniciar excepcion de errores
+                    try{                                                                    
                    System.out.println(""); 
-                    System.out.println("Seleccione la opción deseada:");                // menu de sisttema                     
+                    System.out.println("Seleccione la opción deseada:");                            
                         System.out.println("ALTA PACIENTE ------------  [1]");
                         System.out.println("ALTA DOCTOR --------------  [2]");
                         System.out.println("AGENDAR CITA  ------------  [3]");
@@ -105,15 +101,15 @@ public class Administracion {
                                                         
                             case 4:
 
-                                System.out.println("Saliendo");     // opcion de salida del programa
-                                ban = 1;                            // se cambia el valor de la bandera que controla el ciclo do-while del menu
+                                System.out.println("Saliendo");     
+                                ban = 1;                            
                                 break;
                             default:
-                                System.out.println("Opción incorrecta");  //default que muestra un mensaje de error al introducir una opcion incorrecta
+                                System.out.println("Opción incorrecta");  
                                 break;
                         }
                     }
-                    catch (Exception e)             // catch que obtiene el error y nos muestra un mensaje de error en caso de que se presente uno
+                    catch (Exception e)             
                     {
                         System.out.println("ERROR !!");
                         break;
@@ -123,32 +119,29 @@ public class Administracion {
         
     }
     
-////
-/// Metodo para crear un doctor y guardarlo en el archivo Doctores
-////    
+ 
         public static void Doctor(BufferedWriter cl) throws IOException {
             
             
-        System.out.print("Ingresa el nombre del doctor: ");         /// Se piden los datos del objeto
+        System.out.print("Ingresa el nombre del doctor: ");         
         String nombreDoctor = leer.next();
         System.out.print("Ingresa la especialidad del : ");
         String esp = leer.next();
         System.out.print("**El Id del doctor debe iniciar con 101** ");
         System.out.print("Ingresa el Id del doctor: ");
         String idDoctor = leer.next();
-        Doctor doctorInfo = new Doctor(idDoctor, nombreDoctor, esp); // se crea el objeto doctor con los datos ingresados por usuario
+        Doctor DoctorInfo = new Doctor(idDoctor, nombreDoctor, esp); 
 
         
-        try(FileWriter file = new FileWriter(DoctoresC, true);  // se crean variables auxiliares 
+        try(FileWriter file = new FileWriter(DoctoresC, true);  
         BufferedWriter buf = new BufferedWriter(file);
         PrintWriter out = new PrintWriter(buf)){
 
 
-                    out.print(doctorInfo.idDoctor);           // se escriben los datos en el archivo
+                    out.print(DoctorInfo.idDoctor);           
+                    out.print(DoctorInfo.nombreDoctor);
                     out.print(",");
-                    out.print(doctorInfo.nombreDoctor);
-                    out.print(",");
-                    out.println(doctorInfo.esp);
+                    out.println(DoctorInfo.esp);
 
                     }
                  catch(IOException e) {
@@ -168,20 +161,20 @@ public class Administracion {
     public static void Paciente(BufferedWriter cl) throws IOException {
 
         
-        System.out.print("Ingresa el nombre del Paciente: ");         /// Se piden los datos del objeto
+        System.out.print("Ingresa el nombre del Paciente: ");        
         String nombrePaciente = leer.next();
         System.out.print("**El Id del paciente debe iniciar con 102** ");
         System.out.print("Ingresa el Id del paciente: ");       
         String idPaciente = leer.next();
-        Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); // se crea el objeto doctor con los datos ingresados por usuario
+        Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); 
 
         
-        try(FileWriter file = new FileWriter(PacientesC, true);  // se crean variables auxiliares 
+        try(FileWriter file = new FileWriter(PacientesC, true);  
         BufferedWriter buf = new BufferedWriter(file);
         PrintWriter out = new PrintWriter(buf)){
 
 
-                    out.print(PacienteInfo.idPaciente);           // se escriben los datos en el archivo
+                    out.print(PacienteInfo.idPaciente);          
                     out.print(",");
                     out.println(PacienteInfo.nombrePaciente);
 
@@ -220,12 +213,12 @@ public class Administracion {
                 Cita citaInfo = new Cita(idC, fechaCita, Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
 
         
-        try(FileWriter file = new FileWriter(CitasC, true);  // se crean variables auxiliares 
+        try(FileWriter file = new FileWriter(CitasC, true);  
         BufferedWriter buf = new BufferedWriter(file);
         PrintWriter out = new PrintWriter(buf)){
 
 
-                    out.print(citaInfo.id);           // se escriben los datos en el archivo
+                    out.print(citaInfo.id);          
                     out.print(",");
                     out.println(citaInfo.fechaCita);
                     out.print(",");
@@ -268,5 +261,3 @@ public class Administracion {
                                                                        
     }      
  }
-   
-
