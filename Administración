@@ -1,0 +1,262 @@
+package ecj;
+
+/**
+ *
+ * @author work pc
+ */
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Scanner;
+
+
+public class ECJ {
+
+    /**
+     * @param args the command line arguments
+     */
+    
+     public static Scanner leer = new Scanner(System.in);
+    public static String DoctoresC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Doctores.csv";
+    public static String PacientesC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Pacientes.csv";
+    public static String CitasC = "C:\\Users\\1\\Documents\\NetBeansProjects\\ECJ\\src\\ecj\\Citas.csv";
+
+    
+    
+
+    public static void main(String[] args) throws IOException, ParseException{
+        
+
+
+            BufferedWriter clDoctores = new BufferedWriter(new FileWriter(DoctoresC, true));
+            BufferedWriter clPacientes = new BufferedWriter(new FileWriter(PacientesC, true));
+            BufferedWriter clCitas = new BufferedWriter(new FileWriter(CitasC, true));
+
+            String line;
+
+           
+            int opc, ban = 0, ban1 = 0;
+            boolean acceso = false;
+            
+            HashMap<String, String> mapa = new HashMap<String, String>();
+      Scanner scanner = new Scanner(System.in);
+            System.out.println("** Bienvenido al Sistema de la Clinica**\n");
+            System.out.println("INGRECE SUS DATOS PARA ENTRAR\n");
+      String username = "Clinica";
+        String password = "1020";
+ 
+        System.out.print("Ingresa el usuario: ");
+        String inputUsername = scanner.nextLine();
+ 
+        System.out.print("Ingresa la contraseña: ");
+        String inputPassword = scanner.nextLine();
+ 
+        if (username.equals(inputUsername) && password.equals(inputPassword)) {
+            
+        } else {
+            System.out.println("Contraseña incorrecta, intente nuevamente, por favor");                        
+        }  
+          
+      
+         do          
+                {
+                    try{                                                                    
+                   System.out.println(""); 
+                    System.out.println("Seleccione la opción deseada:");                            
+                        System.out.println("ALTA PACIENTE ------------  [1]");
+                        System.out.println("ALTA DOCTOR --------------  [2]");
+                        System.out.println("AGENDAR CITA  ------------  [3]");
+                        System.out.println("SALIR  -------------------  [4]");
+                      
+                        opc = leer.nextInt();
+
+                        /// Menu de opciones
+                        switch(opc)
+                        {
+                            case 1:
+
+                               Paciente(clPacientes);
+                                break;
+
+                            case 2:
+
+
+                                Doctor(clDoctores);
+                                break;
+
+                            case 3:
+
+                                 Cita(clCitas);
+                            break;
+                                                        
+                            case 4:
+
+                                System.out.println("Saliendo");     
+                                ban = 1;                            
+                                break;
+                            default:
+                                System.out.println("Opción incorrecta");  
+                                break;
+                        }
+                    }
+                    catch (Exception e)             
+                    {
+                        System.out.println("ERROR !!");
+                        break;
+
+                    }
+                }while(ban == 0);
+        
+    }
+    
+ 
+        public static void Doctor(BufferedWriter cl) throws IOException {
+            
+            
+        System.out.print("Ingresa el nombre del doctor: ");         
+        String nombreDoctor = leer.next();
+        System.out.print("Ingresa la especialidad del : ");
+        String esp = leer.next();
+        System.out.print("**El Id del doctor debe iniciar con 101** ");
+        System.out.print("Ingresa el Id del doctor: ");
+        String idDoctor = leer.next();
+        Doctor DoctorInfo = new Doctor(idDoctor, nombreDoctor, esp); 
+
+        
+        try(FileWriter file = new FileWriter(DoctoresC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(DoctorInfo.idDoctor);           
+                    out.print(DoctorInfo.nombreDoctor);
+                    out.print(",");
+                    out.println(DoctorInfo.esp);
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    public static void Paciente(BufferedWriter cl) throws IOException {
+
+        
+        System.out.print("Ingresa el nombre del Paciente: ");        
+        String nombrePaciente = leer.next();
+        System.out.print("**El Id del paciente debe iniciar con 102** ");
+        System.out.print("Ingresa el Id del paciente: ");       
+        String idPaciente = leer.next();
+        Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); 
+
+        
+        try(FileWriter file = new FileWriter(PacientesC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(PacienteInfo.idPaciente);          
+                    out.print(",");
+                    out.println(PacienteInfo.nombrePaciente);
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    public static void Cita(BufferedWriter cl) throws IOException {
+        
+            try{
+                System.out.println("Ingrese el id de la cita: ");
+                System.out.print("**El Id de la Cita debe iniciar con 103** ");
+                int idC = leer.nextInt();
+                System.out.print("Ingresa la fecha de tu cita: ");                
+                String fechaCitaString = leer.next();
+                Date fechaCita = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCitaString);
+                String motivoCita = leer.nextLine();
+                System.out.print("Ingresa el id del doctor (101): ");
+                String idDoctor = leer.next();
+                System.out.print("Ingresa el id del paciente (102): ");
+                String idPaciente = leer.next();
+                System.out.print("Ingresa el motivo de tu cita: ");
+                leer.nextLine();                
+                Cita citaInfo = new Cita(idC, fechaCita, Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
+
+        
+        try(FileWriter file = new FileWriter(CitasC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(citaInfo.id);          
+                    out.print(",");
+                    out.println(citaInfo.fechaCita);
+                    out.print(",");
+                    out.print(citaInfo.idDoctor);
+                    out.print(",");
+                    out.print(citaInfo.idPaciente);
+                    out.print(",");
+                    out.println(citaInfo.motivoCita);
+
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+                
+                
+            }
+                catch(ParseException e) {
+                    System.out.println("ParseException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                            }
+    
+                                                                       
+    }      
+ }
