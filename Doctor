@@ -1,3 +1,9 @@
+package ecj;
+
+/**
+ *
+ * @author work pc
+ */
 public class Doctor {
      
     String idDoctor;
