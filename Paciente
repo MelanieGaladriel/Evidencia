@@ -1,0 +1,32 @@
+package ecj;
+
+/**
+ *
+ * @author work pc
+ */
+public class Paciente {
+    String nombrePaciente;
+    String idPaciente;
+
+    public Paciente(String nombrePaciente, String id) {
+    this.nombrePaciente = nombrePaciente;
+    this.idPaciente = id;
+    }
+    
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public String getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public void setIdPaciente(String id) {
+        this.idPaciente = id;
+    }
+    
+}
