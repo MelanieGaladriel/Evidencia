@@ -2,12 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ecj;
+package evicj;
 
 /**
  *
  * @author work pc
  */
+import static evicj.EviCJ.CitasC;
+import static evicj.EviCJ.leer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDateTime;
 
@@ -29,4 +37,77 @@ public class Cita {
       idPaciente = pacienteId;
       motivoCita = motivo;
     }
+
+    public static void Cita(BufferedWriter cl) throws IOException {
+        
+            try{
+                System.out.println("Ingrese el id de la cita: ");
+                System.out.print("**El Id de la Cita debe iniciar con 103** ");
+                int idC = leer.nextInt();
+                System.out.print("Ingresa la fecha de tu cita: ");                
+                String fechaCitaString = leer.next();
+                Date fechaCita = new SimpleDateFormat("dd/MM/yyyy").parse(fechaCitaString);
+                String hora = leer.nextLine();
+                System.out.print("Ingresa Hora dla cita: ");
+                String motivoCita = leer.nextLine();
+                System.out.print("Ingresa el id del doctor (101): ");
+                String idDoctor = leer.next();
+                System.out.print("Ingresa el id del paciente (102): ");
+                String idPaciente = leer.next();
+                System.out.print("Ingresa el motivo de tu cita: ");
+                leer.nextLine();                
+                Cita citaInfo = new Cita(idC, fechaCita, hora,Integer.parseInt(idDoctor), Integer.parseInt(idPaciente), motivoCita);
+
+        
+        try(FileWriter file = new FileWriter(CitasC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(citaInfo.id);          
+                    out.print(",");
+                    out.println(citaInfo.fechaCita);
+                    out.print(",");
+                    out.println(citaInfo.hora);
+                    out.print(",");
+                    out.print(citaInfo.idDoctor);
+                    out.print(",");
+                    out.print(citaInfo.idPaciente);
+                    out.print(",");
+                    out.println(citaInfo.motivoCita);
+
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+                
+                
+            }
+                catch(ParseException e) {
+                    System.out.println("ParseException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                            }
+    
+                                                                       
+    }
+
+    
 }
