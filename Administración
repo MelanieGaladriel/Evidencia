@@ -248,7 +248,9 @@ public class ECJ {
                             }
                         } catch (IOException e) {
                             System.out.println("IOException catched while closing: " + e.getMessage());
-                        }
+                        } catch (IOException e) {
+                            System.out.println("No pueden haber los mismos horarios para un doctor " + e.getMessage());
+                        } 
                     }
                 
                 
