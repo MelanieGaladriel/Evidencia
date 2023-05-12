@@ -2,7 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ecj;
+package evicj;
+
+import static evicj.EviCJ.PacientesC;
+import static evicj.EviCJ.leer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -32,5 +39,47 @@ public class Paciente {
     public void setIdPaciente(String id) {
         this.idPaciente = id;
     }
+  
+    
+    
+    
+    public static void Paciente(BufferedWriter cl) throws IOException {
+
+        
+        System.out.print("Ingresa el nombre del Paciente: ");        
+        String nombrePaciente = leer.next();
+        System.out.print("**El Id del paciente debe iniciar con 102** ");
+        System.out.print("Ingresa el Id del paciente: ");       
+        String idPaciente = leer.next();
+        Paciente PacienteInfo = new Paciente(nombrePaciente,idPaciente); 
+
+        
+        try(FileWriter file = new FileWriter(PacientesC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(PacienteInfo.idPaciente);          
+                    out.print(",");
+                    out.println(PacienteInfo.nombrePaciente);
+
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    
+    
     
 }
