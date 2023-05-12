@@ -1,4 +1,15 @@
-package ecj;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package evicj;
+
+import static evicj.EviCJ.DoctoresC;
+import static evicj.EviCJ.leer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -39,5 +50,50 @@ public class Doctor {
     public void setEsp(String esp) {
         this.esp = esp;
     }
-      
+ 
+    
+    
+    public static void Doctor(BufferedWriter cl) throws IOException {
+            
+            
+        System.out.print("Ingresa el nombre del doctor: ");         
+        String nombreDoctor = leer.next();
+        System.out.print("Ingresa la especialidad del : ");
+        String esp = leer.next();
+        System.out.print("**El Id del doctor debe iniciar con 101** ");
+        System.out.print("Ingresa el Id del doctor: ");
+        String idDoctor = leer.next();
+        Doctor DoctorInfo = new Doctor(idDoctor, nombreDoctor, esp); 
+
+        
+        try(FileWriter file = new FileWriter(DoctoresC, true);  
+        BufferedWriter buf = new BufferedWriter(file);
+        PrintWriter out = new PrintWriter(buf)){
+
+
+                    out.print(DoctorInfo.idDoctor);           
+                    out.print(DoctorInfo.nombreDoctor);
+                    out.print(",");
+                    out.println(DoctorInfo.esp);
+
+                    }
+                 catch(IOException e) {
+                    System.out.println("IOException catched while writing: " + e.getMessage());
+                    } finally {
+                        try {
+                            if (cl != null) {
+                                cl.close();
+                                System.out.println("Cambios guardados");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("IOException catched while closing: " + e.getMessage());
+                        }
+                    }
+
+    }
+    
+    
+    
+    
 }
+
