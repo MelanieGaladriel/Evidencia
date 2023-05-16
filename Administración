@@ -44,7 +44,7 @@ public class EviCJ {
             String line;
 
            
-            int opc, ban = 0, ban1 = 0;
+            int opc, ban = 0;
             boolean acceso = false;
             
             
