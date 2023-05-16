@@ -40,9 +40,6 @@ public class EviCJ {
             BufferedWriter clDoctores = new BufferedWriter(new FileWriter(DoctoresC, true));
             BufferedWriter clPacientes = new BufferedWriter(new FileWriter(PacientesC, true));
             BufferedWriter clCitas = new BufferedWriter(new FileWriter(CitasC, true));
-
-            String line;
-
            
             int opc, ban = 0;
             boolean acceso = false;
